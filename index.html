@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
+  <style>
+    .x.axis path, .x.axis line{
+      fill: none; stroke: black;
+    }
+  </style>
+
   <h1>Ethiopia</h1>
-  <input id="valBox" type="range" min="1990" max="2014" value="0" style="width:100%">
+  <input id="yearRange" type="range" value="0" style="width:900px">
+  <div class="scale"></div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
 
   <script>
-    var width = 960,
-        height = 600;
+  var widthMap = 960,
+      heightMap = 600;
+
+  var minYear = 1990,
+      maxYear = 2012;
+
+  //set min and max year for slider dynamically
+  $("#yearRange").attr({min: minYear}).attr({max: maxYear});
+
+  // create year scale svg
+  var svg = d3.select('div.scale').append('svg')
+    .attr("width", 900)
+    .attr("height", 30);
+
+  var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, widthMap-100]);
+  // remove commas from numbers
+  var formatAsYear = d3.format(".");
+
+  var axis = d3.svg.axis()
+    .scale(scale)
+    .ticks(maxYear-minYear)
+    .tickFormat(formatAsYear);
+
+  // add a new `<g>` tag to the `<svg>`, then add the axis component to the `<g>`
+  svg.append('g').call(axis).attr('class', 'x axis')
 
     var color = d3.scale.quantize()
       .range([
@@ -27,14 +57,14 @@
       .rotate([-40.4, 0])
       .parallels([20, 50])
       .scale(2000)
-      .translate([width / 2, height / 2]);;
+      .translate([widthMap / 2, heightMap / 2]);;
 
     var path = d3.geo.path()
       .projection(projection);
 
     var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    .attr("width", widthMap)
+    .attr("height", heightMap);
 
     d3.csv("ethiopia.csv", function(data) {
       color.domain([0, 100]);
@@ -80,13 +110,11 @@
               return "#ccc";
             }
           });
-
         })
-
       });
 
     $(document).ready(
-      $('#valBox').on('change', function() {
+      $('#yearRange').on('change', function() {
         var year = $(this).val();
         svg.selectAll("path")
         .style("fill", function(d) {
