@@ -8,7 +8,7 @@
   <script src="http://d3js.org/topojson.v1.min.js"></script>
 
   <h1>Ethiopia</h1>
-  <h2>Improved sanitation facilities (% of population with access)</h2>
+  <h2>Improved water source, rural (% of rural population with access)</h2>
   <div class="map"></div>
   <input id="yearRange" class="slider" type="range">
   <div class="scale"></div>
@@ -76,6 +76,7 @@
     .attr("width", widthMap)
     .attr("height", heightMap);
 
+    d3.csv("water_access_rural.csv", function(data) {
 
       d3.json("countries.json", function(json) {
 
