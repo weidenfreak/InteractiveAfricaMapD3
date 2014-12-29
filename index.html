@@ -5,10 +5,17 @@
     .x.axis path, .x.axis line{
       fill: none; stroke: black;
     }
+
+    .slider {
+      margin-left:15px;
+      width: 852px;
+    }
+
   </style>
 
   <h1>Ethiopia</h1>
-  <input id="yearRange" type="range" value="0" style="width:900px">
+  <div class="map"></div>
+  <input id="yearRange" class="slider" type="range" value="0">
   <div class="scale"></div>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -18,6 +25,9 @@
   var widthMap = 960,
       heightMap = 600;
 
+  var widthScale = 900,
+      heightScale = 20;
+
   var minYear = 1990,
       maxYear = 2012;
 
@@ -26,10 +36,10 @@
 
   // create year scale svg
   var svg = d3.select('div.scale').append('svg')
-    .attr("width", 900)
-    .attr("height", 30);
+    .attr("width", widthScale)
+    .attr("height", heightScale);
 
-  var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, widthMap-100]);
+  var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, 860]);
   // remove commas from numbers
   var formatAsYear = d3.format(".");
 
@@ -62,7 +72,7 @@
     var path = d3.geo.path()
       .projection(projection);
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("div.map").append("svg")
     .attr("width", widthMap)
     .attr("height", heightMap);
 
