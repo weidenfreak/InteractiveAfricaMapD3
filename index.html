@@ -135,6 +135,8 @@
         var value = parseFloat(d.properties.value[colorValue]);
         return color(value);
       } catch(err) {
+        //console.log("Country: " + d.properties.ADM0_A3 + " Year: " + colorValue);
+        console.log("Error fillColor: " + err);
         return "#ccc";
       }
     }
