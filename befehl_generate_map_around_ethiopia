@@ -1,0 +1,5 @@
+ogr2ogr \
+  -f GeoJSON \
+  -where "ADM0_A3 IN ('SOM', 'ETH', 'KEN', 'SSD', 'SDN', 'ERI', 'AGO', 'COD', 'TZA', 'UGA', 'RWA', 'BDI', 'DJI', 'CAF', 'TCD')" \
+  ../countries.json \
+  ne_10m_admin_0_map_subunits.shp
