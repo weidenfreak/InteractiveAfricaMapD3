@@ -64,12 +64,15 @@
     // water or sanitation for their inhabitants might not provide a 100 percent
     color.domain([0, 100]);
 
-    var projection = d3.geo.albers()
-      .center([0, 8.5])
-      .rotate([-40.4, 0])
-      .parallels([20, 50])
-      .scale(500)
-      .translate([widthMap / 2, heightMap / 2]);;
+    var projection = d3.geo.mercator()
+      .scale(400)
+      .center([20, 8.5]);
+
+    //  .center([0, 8.5])
+    //  .rotate([-25.4, 0])
+    //  .parallels([10, 50])
+    //  .scale(400)
+    //  .translate([widthMap / 2, heightMap / 2]);
 
     var path = d3.geo.path()
       .projection(projection);
