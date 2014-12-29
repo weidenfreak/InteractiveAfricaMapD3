@@ -1,56 +1,48 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-  <style>
-    .x.axis path, .x.axis line{
-      fill: none; stroke: black;
-    }
+  <link href="styles.css" type="text/css" rel="stylesheet" />
 
-    .slider {
-      margin-left:15px;
-      width: 852px;
-    }
-
-  </style>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
 
   <h1>Ethiopia</h1>
   <div class="map"></div>
   <input id="yearRange" class="slider" type="range" value="0">
   <div class="scale"></div>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script src="http://d3js.org/topojson.v1.min.js"></script>
 
   <script>
-  var widthMap = 960,
-      heightMap = 600;
+    var widthMap = 960,
+        heightMap = 600;
 
-  var widthScale = 900,
-      heightScale = 20;
+    var widthScale = 900,
+        heightScale = 20;
 
-  var minYear = 1990,
-      maxYear = 2012;
+    var minYear = 1990,
+        maxYear = 2012;
 
-  //set min and max year for slider dynamically
-  $("#yearRange").attr({min: minYear}).attr({max: maxYear});
+    //set min and max year for slider dynamically
+    $("#yearRange").attr({min: minYear}).attr({max: maxYear});
 
-  // create year scale svg
-  var svg = d3.select('div.scale').append('svg')
-    .attr("width", widthScale)
-    .attr("height", heightScale);
+    // create year scale svg
+    var svg = d3.select('div.scale').append('svg')
+      .attr("width", widthScale)
+      .attr("height", heightScale);
 
-  var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, 860]);
-  // remove commas from numbers
-  var formatAsYear = d3.format(".");
+    var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, 860]);
+    // remove commas from numbers
+    var formatAsYear = d3.format(".");
 
-  var axis = d3.svg.axis()
-    .scale(scale)
-    .ticks(maxYear-minYear)
-    .tickFormat(formatAsYear);
+    var axis = d3.svg.axis()
+      .scale(scale)
+      .ticks(maxYear-minYear)
+      .tickFormat(formatAsYear);
 
-  // add a new `<g>` tag to the `<svg>`, then add the axis component to the `<g>`
-  svg.append('g').call(axis).attr('class', 'x axis')
+    // add a new `<g>` tag to the `<svg>`, then add the axis component to the `<g>`
+    svg.append('g').call(axis).attr('class', 'x axis')
 
+    //define color mapping for map
     var color = d3.scale.quantize()
       .range([
         "rgb(255,255,217)",
@@ -61,6 +53,10 @@
         "rgb(29,145,192)",
         "rgb(34,94,168)",
         "rgb(12,44,132)"]);
+
+    // color domain is static because even the country that has the best
+    // water or sanitation for their inhabitants might not provide a 100 percent
+    color.domain([0, 100]);
 
     var projection = d3.geo.albers()
       .center([0, 8.5])
@@ -77,7 +73,6 @@
     .attr("height", heightMap);
 
     d3.csv("ethiopia.csv", function(data) {
-      color.domain([0, 100]);
 
       //d3.json("subunits.json", function(error, ethiopia) {
       //  var subunits = topojson.feature(ethiopia, ethiopia.objects.subunits);
@@ -127,18 +122,19 @@
       $('#yearRange').on('change', function() {
         var year = $(this).val();
         svg.selectAll("path")
-        .style("fill", function(d) {
-          //Get data value
-          var value = parseFloat(d.properties.value[year]);
+          .transition()
+          .style("fill", function(d) {
+            //Get data value
+            var value = parseFloat(d.properties.value[year]);
 
-          if (value) {
-            //If value exists…
-            return color(value);
-          } else {
-            //If value is undefined…
-            return "#ccc";
-          }
-        });
+            if (value) {
+              //If value exists…
+              return color(value);
+            } else {
+              //If value is undefined…
+              return "#ccc";
+            }
+          });
       })
     );
 
