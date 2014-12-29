@@ -10,7 +10,7 @@
   <h1>Ethiopia</h1>
   <h2>Improved sanitation facilities (% of population with access)</h2>
   <div class="map"></div>
-  <input id="yearRange" class="slider" type="range" value="0">
+  <input id="yearRange" class="slider" type="range">
   <div class="scale"></div>
 
   <script>
@@ -24,7 +24,10 @@
         maxYear = 2012;
 
     //set min and max year for slider dynamically
-    $("#yearRange").attr({min: minYear}).attr({max: maxYear});
+    $("#yearRange")
+      .attr({min: minYear})
+      .attr({max: maxYear})
+      .val(minYear);
 
     // create year scale svg
     var svg = d3.select('div.scale').append('svg')
@@ -97,48 +100,40 @@
               break;
             }
           }
-
         }
+
         svg.selectAll("path")
           .data(json.features)
           .enter()
           .append("path")
           .attr("d", path)
           .style("fill", function(d) {
-            //Get data value
-            var value = parseFloat(d.properties.value[1990]);
-
-            if (value) {
-              //If value exists…
-              return color(value);
-            } else {
-              //If value is undefined…
-              return "#ccc";
-            }
+            return fillColor(d, minYear);
           });
         })
       });
 
     $(document).ready(
+      // change color of map depending on slider position
       $('#yearRange').on('change', function() {
         var year = $(this).val();
         svg.selectAll("path")
           .transition()
           .style("fill", function(d) {
-            //Get data value
-            var value = parseFloat(d.properties.value[year]);
-
-            if (value) {
-              //If value exists…
-              return color(value);
-            } else {
-              //If value is undefined…
-              return "#ccc";
-            }
+            return fillColor(d, year);
           });
       })
     );
 
+    // find color for value of a certain year
+    function fillColor(d, colorValue) {
+      var value = parseFloat(d.properties.value[colorValue]);
+      if (value) {
+        return color(value);
+      } else {
+        return "#ccc";
+      }
+    }
   </script>
 
 </body>
