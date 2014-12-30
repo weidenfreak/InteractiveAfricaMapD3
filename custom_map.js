@@ -53,7 +53,7 @@ var color = d3.scale.quantize()
   var path = d3.geo.path()
   .projection(projection);
 
-  var svg = d3.select("div.map").append("svg")
+  var svg = d3.select("figure.map").append("svg")
   .attr("width", widthMap)
   .attr("height", heightMap);
 
