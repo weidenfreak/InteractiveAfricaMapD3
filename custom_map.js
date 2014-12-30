@@ -75,8 +75,8 @@ var color = d3.scale.quantize()
           if (dataState == jsonState) {
             //Copy the data value into the JSON
             json.features[j].properties.value = dataValue;
-            //Stop looking through the JSON
-            //break;
+            //For whatever reasons are some countries twice in the geojson file
+            //Because of that all states need to be filled with data.
           }
         }
       }
