@@ -1,61 +1,61 @@
 var widthMap = 960,
-heightMap = 600;
+    heightMap = 600;
 
 var widthScale = 900,
-heightScale = 20;
+    heightScale = 20;
 
 var minYear = 1990,
-maxYear = 2012;
+    maxYear = 2012;
 
 //set min and max year for slider dynamically
 $("#yearRange")
-.attr({min: minYear})
-.attr({max: maxYear})
-.val(minYear);
+  .attr({min: minYear})
+  .attr({max: maxYear})
+  .val(minYear);
 
 // create year scale svg
 var svg = d3.select('div.scale').append('svg')
-.attr("width", widthScale)
-.attr("height", heightScale);
+  .attr("width", widthScale)
+  .attr("height", heightScale);
 
 var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, 860]);
 // remove commas from numbers
 var formatAsYear = d3.format(".");
 
 var axis = d3.svg.axis()
-.scale(scale)
-.ticks(maxYear-minYear)
-.tickFormat(formatAsYear);
+  .scale(scale)
+  .ticks(maxYear-minYear)
+  .tickFormat(formatAsYear);
 
 // add a new `<g>` tag to the `<svg>`, then add the axis component to the `<g>`
 svg.append('g').call(axis).attr('class', 'x axis')
 
 //define color mapping for map
 var color = d3.scale.quantize()
-.range([
-  "rgb(255,255,217)",
-  "rgb(237,248,177)",
-  "rgb(199,233,180)",
-  "rgb(127,205,187)",
-  "rgb(65,182,196)",
-  "rgb(29,145,192)",
-  "rgb(34,94,168)",
-  "rgb(12,44,132)"]);
+  .range([
+    "rgb(255,255,217)",
+    "rgb(237,248,177)",
+    "rgb(199,233,180)",
+    "rgb(127,205,187)",
+    "rgb(65,182,196)",
+    "rgb(29,145,192)",
+    "rgb(34,94,168)",
+    "rgb(12,44,132)"]);
 
   // color domain is static because even the country that has the best
   // water or sanitation for their inhabitants might not provide a 100 percent
   color.domain([0, 100]);
 
   var projection = d3.geo.mercator()
-  .scale(400)
-  .center([20, 8.5]);
+    .scale(400)
+    .center([20, 8.5]);
 
   var path = d3.geo.path()
-  .projection(projection);
+    .projection(projection);
 
   var svg = d3.select("figure.map").append("svg")
-  .attr("width", widthMap)
-  .attr("height", heightMap);
+    .attr("width", widthMap)
+    .attr("height", heightMap);
 
   d3.csv("water_access_rural.csv", function(data) {
 
@@ -82,15 +82,14 @@ var color = d3.scale.quantize()
       }
 
       svg.selectAll("path")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .attr("class", "countries")
-      .style("fill", function(d) {
-        return fillColor(d, minYear);
-      });
-    })
+        .data(json.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("class", "countries")
+        .style("fill", function(d) {
+          return fillColor(d, minYear);
+        })
   });
 
   d3.select('#yearRange').on('change', function() {
