@@ -18,7 +18,9 @@ var svg = d3.select('div.scale').append('svg')
   .attr("width", widthScale)
   .attr("height", heightScale);
 
-var scale = d3.scale.linear().domain([minYear, maxYear]).range([20, 860]);
+var scale = d3.scale.linear().
+  domain([minYear, maxYear]).
+  range([20, 860]);
 // remove commas from numbers
 var formatAsYear = d3.format(".");
 
