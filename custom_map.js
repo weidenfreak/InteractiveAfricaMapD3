@@ -93,17 +93,14 @@ var color = d3.scale.quantize()
     })
   });
 
-  $(document).ready(
-    // change color of map depending on slider position
-    $('#yearRange').on('change', function() {
-      var year = $(this).val();
-      svg.selectAll("path")
-      .transition()
-      .style("fill", function(d) {
-        return fillColor(d, year);
-      });
-    })
-  );
+  d3.select('#yearRange').on('change', function() {
+    var year = $(this).val();
+    svg.selectAll("path")
+    .transition()
+    .style("fill", function(d) {
+      return fillColor(d, year);
+    });
+  })
 
   // find color for value of year
   function fillColor(d, colorValue) {
@@ -111,10 +108,8 @@ var color = d3.scale.quantize()
     try {
       var value = parseFloat(d.properties.value[colorValue]);
       if (value) {
-        //If value exists…
         return color(value);
       } else {
-        //If value is undefined…
         return "#ccc";
       }
     } catch(err) {
