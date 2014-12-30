@@ -15,7 +15,6 @@ main {
 .x.axis path, .x.axis line{
   fill: none;
   stroke: black;
-
 }
 
 .slider {
@@ -26,6 +25,7 @@ main {
 .scale {
   height: 30px;
   margin-bottom: 30px;
+  font-size: 13px;
 }
 
 .countries {
