@@ -2,14 +2,15 @@ body {
   font-family: 'Roboto Slab', serif;
   font-weight: 300;
   margin:50px 0px; padding:0px;
-  text-align:center;
+}
+
+h1, h2, h3, h4, h5 {
+  text-align: center;
 }
 
 main {
   width: 900px;
   margin: 0px auto;
-  padding: 42px;
-  border: 1px dashed #333;
 }
 
 .x.axis path, .x.axis line{
@@ -18,7 +19,7 @@ main {
 }
 
 .slider {
-  margin-left:-19px;
+  margin-left: 13px;
   width: 852px;
 }
 
@@ -41,6 +42,11 @@ main {
 .legend {
   font-size: 12px;
 }
+
 rect {
   stroke-width: 2;
+}
+
+hr {
+  margin-top: 30px;
 }
