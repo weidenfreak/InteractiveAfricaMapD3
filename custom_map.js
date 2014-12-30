@@ -37,6 +37,7 @@ svg.append('g').call(axis).attr('class', 'x axis')
 
 //define color mapping for map
 var color = d3.scale.quantize()
+  .domain([0, 100])
   .range([
     "rgb(255,255,217)",
     "rgb(237,248,177)",
@@ -46,10 +47,6 @@ var color = d3.scale.quantize()
     "rgb(29,145,192)",
     "rgb(34,94,168)",
     "rgb(12,44,132)"]);
-
-  // color domain is static because even the country that has the best
-  // water or sanitation for their inhabitants might not provide a 100 percent
-  color.domain([0, 100]);
 
   var projection = d3.geo.mercator()
     .scale(400)
