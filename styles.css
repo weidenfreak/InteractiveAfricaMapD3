@@ -6,3 +6,9 @@
   margin-left:15px;
   width: 852px;
 }
+
+.countries {
+  fill: none;
+  stroke: #fff;
+  stroke-linejoin: round;
+}
