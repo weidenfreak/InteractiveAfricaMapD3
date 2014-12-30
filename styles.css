@@ -33,3 +33,7 @@ main {
   stroke: #fff;
   stroke-linejoin: round;
 }
+
+.year {
+  font-size: 25px;
+}

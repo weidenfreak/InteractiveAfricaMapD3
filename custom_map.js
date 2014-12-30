@@ -90,30 +90,60 @@ var color = d3.scale.quantize()
         .style("fill", function(d) {
           return fillColor(d, minYear);
         })
+        .append("title")
+        .text(function(d) {
+          return tooltip(d, minYear);
+        })
+      })
   });
 
   d3.select('#yearRange').on('change', function() {
+    d3.selectAll('title').remove();
+
     var year = $(this).val();
-    svg.selectAll("path")
-    .transition()
-    .style("fill", function(d) {
-      return fillColor(d, year);
-    });
+    var map = svg.selectAll("path");
+
+    //set current year in headline according to chosen year in slider
+    $(".year").text("in " + year);
+
+    //add tooltip in two step process:
+    //first step: append title
+    map
+      .append("title")
+      .text(function(d) {
+        return tooltip(d, year);
+      })
+
+    //second step: run transition (after a transition it is not possible to append elements)
+    map
+      .transition()
+      .style("fill", function(d) {
+        return fillColor(d, year);
+      })
   })
 
-  // find color for value of year
-  function fillColor(d, colorValue) {
-    // quick fix. this is how to not use try and catch...
+  function tooltip(d, year) {
+    return d.properties.NAME + ": " + readYearValue(d, year) + "%" + " (" + year + ")";
+  }
+
+  function readYearValue(d, year) {
+    //not all countries have values for every year
     try {
-      var value = parseFloat(d.properties.value[colorValue]);
-      if (value) {
-        return color(value);
-      } else {
-        return "#ccc";
-      }
+      return parseFloat(d.properties.value[year]);
     } catch(err) {
-      console.log("Country: " + d.properties.ADM0_A3 + " Year: " + colorValue);
-      console.log("Error fillColor: " + err);
+      //console.log("Country: " + d.properties.ADM0_A3 + " Year: " + year);
+      //console.log("Error readYearValue: " + err);
+      return "";
+    }
+  }
+
+  // find color for value of year
+  function fillColor(d, year) {
+    var value = readYearValue(d, year);
+    if (value) {
+      return color(value);
+    } else {
       return "#ccc";
     }
+
   }
