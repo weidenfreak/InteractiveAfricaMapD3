@@ -1,8 +1,10 @@
 Interactive Africa Map D3
 ======================
-A prototype to visualise data from the worldbank. Built with D3.js
+A prototype to visualise data from the [Worldbank](http://www.worldbank.org/). 
 
 [Live version](http://weidenfreak.github.io/InteractiveAfricaMapD3/) (Optimised for Google Chrome)
+
+Built with D3.js
 
 Recommended Book for learning D3: [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345/index.html)
 
