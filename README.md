@@ -4,6 +4,8 @@ A prototype to visualise data from the [Worldbank](http://www.worldbank.org/). C
 
 See [live version](http://weidenfreak.github.io/InteractiveAfricaMapD3/). (Optimised for Google Chrome only)
 
+See [InteractiveAfricaMapD3Arduino](https://github.com/weidenfreak/InteractiveAfricaMapD3Arduino) for version with Arduino and WebSockets.
+
 Built with [D3.js](http://d3js.org/). I recommend this awsome free book for learning D3: [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345/index.html)
 
 Start locally
