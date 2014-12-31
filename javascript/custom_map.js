@@ -7,7 +7,7 @@ var widthScale = 900,
 var minYear = 1990,
     maxYear = 2012;
 
-// create year slider and axis for description
+// create year slider and axis
 
 $(".slider")
   .attr({min: minYear})
@@ -83,7 +83,7 @@ d3.csv("data/water_access_rural.csv", function(data) {
       .attr("d", path)
       .attr("class", "countries")
       .style("fill", function(d) {
-        return fillColor(d, minYear);
+        return mapValueToColor(d, minYear);
       })
       .append("title")
       .text(function(d) {
@@ -93,10 +93,10 @@ d3.csv("data/water_access_rural.csv", function(data) {
 });
 
 d3.select('.slider').on('change', function() {
-  d3.selectAll('title').remove();
-
   var year = $(this).val();
   var map = svg.selectAll("path");
+
+  d3.selectAll('title').remove();
 
   //set current year in headline according to chosen year in slider
   $(".currentYear").text("in " + year);
@@ -113,32 +113,31 @@ d3.select('.slider').on('change', function() {
   map
     .transition()
     .style("fill", function(d) {
-      return fillColor(d, year);
+      return mapValueToColor(d, year);
     })
 })
 
-
 function tooltip(d, year) {
-  return d.properties.NAME + ": " + readYearValue(d, year) + "%" + " (" + year + ")";
+  return d.properties.NAME + ": " + getValueForYear(d, year) + "%";
 }
 
-function readYearValue(d, year) {
+function mapValueToColor(d, year) {
+  var value = getValueForYear(d, year);
+  if (value) {
+    return color(value);
+  } else {
+    return "#ccc";
+  }
+}
+
+//value: e.g. % of people with access to water
+function getValueForYear(d, year) {
   //not all countries have values for every year
   try {
     return parseFloat(d.properties.value[year]);
   } catch(err) {
     //console.log("Country: " + d.properties.ADM0_A3 + " Year: " + year);
-    //console.log("Error readYearValue: " + err);
+    //console.log("Error getValueForYear: " + err);
     return "";
-  }
-}
-
-// find color for value of year
-function fillColor(d, year) {
-  var value = readYearValue(d, year);
-  if (value) {
-    return color(value);
-  } else {
-    return "#ccc";
   }
 }
