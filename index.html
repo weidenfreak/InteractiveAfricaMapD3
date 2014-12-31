@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <body>
   <link href="styles/styles.css" type="text/css" rel="stylesheet" />
-  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:300' rel='stylesheet' type='text/css'>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
   <script src="http://d3js.org/topojson.v1.min.js"></script>
@@ -12,11 +12,13 @@
   <main>
     <h1>Africa</h1>
     <h3>Improved water source, rural (% of rural population with access)*</h3>
-    <h4 class="year">in 1990</h4>
+    <h4 class="currentYear">in 1990</h4>
 
     <figure class="map"></figure>
-    <input id="yearRange" class="slider" type="range">
+
+    <input class="slider" type="range">
     <div class="scale"></div>
+
     <small>*Access to an improved water source refers to the percentage of the
       population using an improved drinking water source. The improved drinking
       water source includes piped water on premises (piped household water
@@ -25,13 +27,14 @@
       boreholes, protected dug wells, protected springs, and rainwater collection).
     </small>
   </main>
-  <hr size="1">
+
+  <hr>
   <center>By <a href="http://twitter.com/weidenfreak">@weidenfreak</a>
     | Powered by <a href="http://d3js.org/">d3</a>
-    | Data from <a href="http://www.worldbank.org/">Worldbank</a>
+    | Data from <a href="http://data.worldbank.org/indicator/SH.H2O.SAFE.RU.ZS">Worldbank</a>
     | Source at <a href="https://github.com/weidenfreak/InteractiveAfricaMapD3">Github</a>
   </center>
+
   <script src="javascript/custom_map.js"></script>
   <script src="javascript/legend.js"></script>
-
 </body>
