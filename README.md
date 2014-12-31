@@ -1,6 +1,6 @@
 Interactive Africa Map D3
 ======================
-A prototype to visualise data from the [Worldbank](http://www.worldbank.org/). Currently it only shows '[Improved water source, rural (% of rural population with access)](http://data.worldbank.org/indicator/SH.H2O.SAFE.RU.ZS)' but it could easily be extended to show other data as well.
+A prototype to visualise data from the [Worldbank](http://www.worldbank.org/). Currently it only shows '[Improved water source, rural (% of rural population with access)](http://data.worldbank.org/indicator/SH.H2O.SAFE.RU.ZS)'.
 
 See [Live version](http://weidenfreak.github.io/InteractiveAfricaMapD3/) (Optimised for Google Chrome only)
 
