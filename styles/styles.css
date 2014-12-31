@@ -35,7 +35,7 @@ main {
   stroke-linejoin: round;
 }
 
-.year {
+.currentYear {
   font-size: 25px;
 }
 

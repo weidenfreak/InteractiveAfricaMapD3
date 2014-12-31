@@ -8,7 +8,7 @@ var minYear = 1990,
     maxYear = 2012;
 
 //set min and max year for slider dynamically
-$("#yearRange")
+$(".slider")
   .attr({min: minYear})
   .attr({max: maxYear})
   .val(minYear);
@@ -60,12 +60,9 @@ var color = d3.scale.quantize()
 
     d3.json("data/countries.json", function(json) {
 
-      //Merge the ag. data and GeoJSON
-      //Loop through once for each ag. data value
+      //Merge Worldbank data and GeoJSON
       for (var i = 0; i < data.length; i++) {
-        //Grab state name
         var dataState = data[i]["Country Code"];
-        //Grab data value, and convert from string to float
         var dataValue = data[i];
         //Find the corresponding state inside the GeoJSON
         for (var j = 0; j < json.features.length; j++) {
@@ -96,14 +93,14 @@ var color = d3.scale.quantize()
       })
   });
 
-  d3.select('#yearRange').on('change', function() {
+  d3.select('.slider').on('change', function() {
     d3.selectAll('title').remove();
 
     var year = $(this).val();
     var map = svg.selectAll("path");
 
     //set current year in headline according to chosen year in slider
-    $(".year").text("in " + year);
+    $(".currentYear").text("in " + year);
 
     //add tooltip in two step process:
     //first step: append title
