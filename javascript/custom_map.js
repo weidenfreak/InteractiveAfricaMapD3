@@ -59,9 +59,9 @@ var color = d3.scale.quantize()
     .attr("width", widthMap)
     .attr("height", heightMap);
 
-  d3.csv("water_access_rural.csv", function(data) {
+  d3.csv("data/water_access_rural.csv", function(data) {
 
-    d3.json("countries.json", function(json) {
+    d3.json("data/countries.json", function(json) {
 
       //Merge the ag. data and GeoJSON
       //Loop through once for each ag. data value
