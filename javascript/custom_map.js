@@ -104,6 +104,15 @@ d3.csv("data/water_access_rural.csv", function(data) {
 
 d3.select('.slider').on('change', function() {
   var year = $(this).val();
+
+  updateMap(year);
+})
+
+//-------------------------------
+//helper
+//-------------------------------
+
+function updateMap(year) {
   var map = svg.selectAll("path");
 
   d3.selectAll('title').remove();
@@ -114,21 +123,17 @@ d3.select('.slider').on('change', function() {
   //add tooltip in two step process:
   //because after a transition it is not possible to append elements
   map
-    .append("title")
-    .text(function(d) {
-      return tooltip(d, year);
-    })
+  .append("title")
+  .text(function(d) {
+    return tooltip(d, year);
+  })
 
   map
-    .transition()
-    .style("fill", function(d) {
-      return mapValueToColor(d, year);
-    })
-})
-
-//-------------------------------
-//helper
-//-------------------------------
+  .transition()
+  .style("fill", function(d) {
+    return mapValueToColor(d, year);
+  })
+}
 
 function tooltip(d, year) {
   return d.properties.NAME + ": " + getValueForYear(d, year) + "%";
