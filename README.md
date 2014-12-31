@@ -8,6 +8,13 @@ Built with D3.js
 
 Recommended Book for learning D3: [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345/index.html)
 
+Start locally
+------------
+Fire up a local web server to view. I use [http-server](https://github.com/nodeapps/http-server), but any server will do:
+```
+http-server -p 8008
+```
+
 How to generate geoJSON for a map:
 ----------------------------------
 Install the tools as described here: [#Installing Tools](http://bost.ocks.org/mike/map/)
