@@ -4,6 +4,7 @@ Interactive Africa Map D3
 A prototype to visualise data from the worldbank. Built with D3.js
 
 How to generate geoJSON for Africa:
+
 ```
 ogr2ogr \
 -f GeoJSON \
