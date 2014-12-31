@@ -7,13 +7,13 @@ var widthScale = 900,
 var minYear = 1990,
     maxYear = 2012;
 
-//set min and max year for slider dynamically
+// create year slider and axis for description
+
 $(".slider")
   .attr({min: minYear})
   .attr({max: maxYear})
   .val(minYear);
 
-// create year scale svg
 var svg = d3.select('div.scale').append('svg')
   .attr("width", widthScale)
   .attr("height", heightScale);
@@ -21,7 +21,7 @@ var svg = d3.select('div.scale').append('svg')
 var scale = d3.scale.linear().
   domain([minYear, maxYear]).
   range([20, 860]);
-// remove commas from numbers
+
 var formatAsYear = d3.format(".");
 
 var axis = d3.svg.axis()
@@ -29,7 +29,6 @@ var axis = d3.svg.axis()
   .ticks(maxYear-minYear)
   .tickFormat(formatAsYear);
 
-// add a new `<g>` tag to the `<svg>`, then add the axis component to the `<g>`
 svg.append('g').call(axis).attr('class', 'x axis')
 
 //define color mapping for map
