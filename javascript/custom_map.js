@@ -7,7 +7,9 @@ var widthScale = 900,
 var minYear = 1990,
     maxYear = 2012;
 
+//-------------------------------
 // create year slider and axis
+//-------------------------------
 
 $(".slider")
   .attr({min: minYear})
@@ -31,7 +33,10 @@ var axis = d3.svg.axis()
 
 svg.append('g').call(axis).attr('class', 'x axis')
 
+//-------------------------------
 //define color mapping for map
+//-------------------------------
+
 var color = d3.scale.quantize()
   .domain([0, 100])
   .range([
@@ -44,6 +49,10 @@ var color = d3.scale.quantize()
     "rgb(34,94,168)",
     "rgb(12,44,132)"]);
 
+//-------------------------------
+//create svg map
+//-------------------------------
+
 var projection = d3.geo.mercator()
   .scale(400)
   .center([20, 8.5]);
@@ -55,20 +64,17 @@ var svg = d3.select("figure.map").append("svg")
   .attr("width", widthMap)
   .attr("height", heightMap);
 
+//Merge Worldbank data and GeoJSON
 d3.csv("data/water_access_rural.csv", function(data) {
-
   d3.json("data/countries.json", function(json) {
-
-    //Merge Worldbank data and GeoJSON
     for (var i = 0; i < data.length; i++) {
-      var dataState = data[i]["Country Code"];
       var dataValue = data[i];
       //Find the corresponding state inside the GeoJSON
       for (var j = 0; j < json.features.length; j++) {
-        //ADM03_A3 is ISOCode 3 for countries
-        var jsonState = json.features[j].properties.ADM0_A3;
+        var jsonState = json.features[j].properties.ADM0_A3; //ADM03_A3 = ISOCountryCode 3
+        var dataState = dataValue["Country Code"];
+
         if (dataState == jsonState) {
-          //Copy the data value into the JSON
           json.features[j].properties.value = dataValue;
           //For whatever reasons are some countries twice in the geojson file
           //Because of that all states need to be filled with data.
@@ -92,6 +98,10 @@ d3.csv("data/water_access_rural.csv", function(data) {
     })
 });
 
+//-------------------------------
+//dynamic updates when slider is moved
+//-------------------------------
+
 d3.select('.slider').on('change', function() {
   var year = $(this).val();
   var map = svg.selectAll("path");
@@ -102,14 +112,13 @@ d3.select('.slider').on('change', function() {
   $(".currentYear").text("in " + year);
 
   //add tooltip in two step process:
-  //first step: append title
+  //because after a transition it is not possible to append elements
   map
     .append("title")
     .text(function(d) {
       return tooltip(d, year);
     })
 
-  //second step: run transition (after a transition it is not possible to append elements)
   map
     .transition()
     .style("fill", function(d) {
@@ -117,10 +126,15 @@ d3.select('.slider').on('change', function() {
     })
 })
 
+//-------------------------------
+//helper
+//-------------------------------
+
 function tooltip(d, year) {
   return d.properties.NAME + ": " + getValueForYear(d, year) + "%";
 }
 
+//value: e.g. % of people with access to water
 function mapValueToColor(d, year) {
   var value = getValueForYear(d, year);
   if (value) {
