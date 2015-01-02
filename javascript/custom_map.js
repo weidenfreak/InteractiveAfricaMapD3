@@ -11,6 +11,8 @@ var minYear = 1990,
 // create year slider and axis
 //-------------------------------
 
+$(".currentYear").text("in " + minYear);
+
 $(".slider")
   .attr({min: minYear})
   .attr({max: maxYear})
